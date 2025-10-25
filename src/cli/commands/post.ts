@@ -16,7 +16,9 @@ import {
   replaceImageReferences,
 } from '@core/markdown/image-handler';
 import { convertMarkdownToHtml, sanitizeHtmlForNote } from '@core/markdown/converter';
-import type { PostCommandOptions } from '@shared/types';
+import { createPostHistoryRepository } from '@data/repositories/post-history';
+import { Post } from '@data/models/post';
+import { DEFAULT_CONFIG, type PostCommandOptions } from '@shared/types';
 
 export function createPostCommand(): Command {
   const post = new Command('post')
@@ -131,6 +133,40 @@ export function createPostCommand(): Command {
         console.log(`  Post ID: ${postResult.id}`);
         console.log(`  Status: ${postResult.status}`);
         console.log(`  Created: ${postResult.createdAt}`);
+
+        // 投稿履歴を保存
+        try {
+          const historyPath = resolve(
+            DEFAULT_CONFIG.storage.dataDir,
+            DEFAULT_CONFIG.storage.historyFileName,
+          );
+          const repository = createPostHistoryRepository(historyPath);
+
+          const postRecord = new Post({
+            id: postResult.id,
+            title: parsed.frontMatter.title,
+            sourceFileName: file,
+            sourceFilePath: filePath,
+            postedAt: postResult.createdAt,
+            status: postResult.status,
+            mediaIds: uploadedImages.map((img) => img.uploadedMediaId),
+          });
+
+          await repository.save(postRecord);
+          console.log('✅ Post history saved');
+
+          // 統計情報を表示
+          const stats = await repository.getStats();
+          console.log('\nPosting statistics:');
+          console.log(`  Total posts: ${stats.totalPosts}`);
+          console.log(`  Drafts: ${stats.draftCount}`);
+          console.log(`  Published: ${stats.publishedCount}`);
+        } catch (historyError) {
+          console.warn(
+            '⚠️  Failed to save post history:',
+            historyError instanceof Error ? historyError.message : historyError,
+          );
+        }
       } catch (error) {
         console.error(
           '❌ Post failed:',
