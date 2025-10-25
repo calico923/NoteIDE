@@ -75,8 +75,8 @@ export interface PostCommandOptions extends CliOptions {
  * loginコマンドのオプション
  */
 export interface LoginCommandOptions extends CliOptions {
-  headless?: boolean; // ブラウザをheadlessモードで起動
-  saveCredentials?: boolean; // 認証情報をOS Keychainに保存（デフォルトtrue）
+  headless?: boolean; // ブラウザをheadlessモードで起動（デフォルトfalse）
+  save?: boolean; // 認証情報をOS Keychainに保存（デフォルトtrue）
 }
 
 /**
