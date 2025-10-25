@@ -1,0 +1,48 @@
+{
+  "name": "noteide",
+  "version": "0.1.0",
+  "description": "Note記事の自動投稿CLIツール",
+  "type": "module",
+  "main": "./dist/cli/main.js",
+  "bin": {
+    "noteide": "./dist/cli/main.js"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "tsx src/cli/main.ts",
+    "build": "tsc",
+    "lint": "biome lint src",
+    "format": "biome format src",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "note",
+    "blog",
+    "automation",
+    "markdown",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "gray-matter": "^4.0.3",
+    "keytar": "^7.9.0",
+    "puppeteer": "^21.6.0",
+    "rehype-stringify": "^10.0.0",
+    "remark": "^15.0.1",
+    "remark-rehype": "^11.0.0",
+    "unified": "^10.1.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@types/node": "^20.10.6",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
