@@ -4,22 +4,70 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Status
 
-**NoteIDE** is a newly initialized repository with no source code or architecture yet established.
+**NoteIDE** - Note記事の自動投稿CLIツール + Web UI（計画中）
 
-## Current Repository Contents
+**現在のフェーズ**: 要件定義完了、Phase 1（MVP - CLI実装）開始準備中
 
-- Empty README.md (placeholder)
-- .specstory/ directory for SpecStory extension (AI chat history tracking)
-- .cursorindexingignore configured to exclude .specstory from indexing
+## Documentation Structure
 
-## Development Setup
+### 要件定義書
+- **[docs/mvp-requirement.md](./docs/mvp-requirement.md)** - **Phase 1（MVP）実装時はこちらを参照** ⭐
+  - CLI機能のみ（TypeScript/Node.js）
+  - 実装計画（5ステップ、1週間）
+  - 成功基準
+- **[docs/requirement.md](./docs/requirement.md)** - 全体設計書（Phase 1-3）
+  - Phase 2: Web UI（Next.js + React）
+  - Phase 3: 分析機能（データ可視化）
+  - 長期ロードマップ
 
-No build system, dependencies, or development workflow has been configured yet.
+### その他のドキュメント
+- **[docs/](./docs/)** - Obsidian vaultへのシンボリックリンク
+  - Note API仕様
+  - 技術調査資料
 
-## Notes for Future Development
+## Technology Stack
 
-When implementing NoteIDE, this CLAUDE.md should be updated with:
-- Project architecture and technology stack decisions
-- Build, test, and development commands
-- Key architectural patterns and design decisions
-- Important conventions and coding standards specific to this project
+### Phase 1 (MVP - CLI)
+- **TypeScript/Node.js 20 LTS** - ランタイム
+- **Commander.js** - CLI構築
+- **keytar** - OS Keychain統合（認証情報の安全な保存）
+- **Puppeteer** - Note認証（Cookie取得）
+- **unified/remark/rehype** - Markdown処理
+- **Zod** - バリデーション・型定義
+- **pnpm** - パッケージマネージャ
+- **Biome** - リンター・フォーマッター
+
+### Phase 2 (Web UI - 計画中)
+- Next.js 14.2 + React 18
+- tRPC（型安全なAPI通信）
+- Tailwind CSS + Shadcn/ui
+
+## Development Workflow
+
+### Current Status
+要件定義完了。次のステップ: Phase 1実装開始
+
+### Next Steps
+1. プロジェクトセットアップ（TypeScript + pnpm + Biome）
+2. Note API Client実装
+3. Markdown処理実装
+4. CLI実装
+5. データ永続化実装
+
+詳細は **[docs/mvp-requirement.md](./docs/mvp-requirement.md)** を参照。
+
+## Important Conventions
+
+### Security
+- 認証情報はOS Keychain（keytar）に保存
+- 環境変数（.env）はフォールバック用のみ
+- /data/ ディレクトリは .gitignore で除外
+
+### Architecture
+- Repository Patternでデータ層を抽象化
+- TypeScriptによる型安全性
+- 機密情報と非機密情報を明確に分離
+
+### Git Workflow
+- startpack/ ディレクトリは参考用（Git除外）
+- docs/ はObsidian vaultへのシンボリックリンク
