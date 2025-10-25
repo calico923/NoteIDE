@@ -13,14 +13,14 @@ const NOTE_HOME_URL = 'https://note.com';
  * Note.com に Puppeteer でログイン
  * @param email メールアドレス
  * @param password パスワード
- * @param headless ブラウザをヘッドレスモードで起動するか（デフォルト: true）
+ * @param headless ブラウザをヘッドレスモードで起動するか（デフォルト: "new"）
  * @returns Cookie認証情報
  * @throws Error ログイン失敗時
  */
 export async function loginWithPuppeteer(
   email: string,
   password: string,
-  headless = true,
+  headless: boolean | "new" = "new",
 ): Promise<NoteCookieAuth> {
   let browser: Browser | null = null;
   let page: Page | null = null;
